@@ -4,7 +4,6 @@ import com.mysql.jdbc.StringUtils;
 import com.red.common.CSVContentUtils;
 import com.red.common.RemoteConnection;
 import com.red.domain.entity.UnitDO;
-import com.red.service.CrawlingHistoryService;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,11 +18,8 @@ public class UnitProcessor {
     private final static String AMP = "&";
     private RemoteConnection remoteConnection;
     private boolean getDetailedUnitInformation = true;
-    private CrawlingHistoryService crawlingHistoryService;
 
     public void crawlOpenUnitsFromZipcode() throws IOException {
-//        crawlingHistoryService.getCrawlingHistorySequenceValue();
-
         Zipcode[] zipcodes = Zipcode.values();
         for (Zipcode zipcode : zipcodes) {
             String path = remoteConnection.fetchCSVFilePathFromZipcode(zipcode.getZipcode());
@@ -43,7 +39,7 @@ public class UnitProcessor {
     public void getDetailedInformation(List<UnitDO> unitDOs) {
         for (UnitDO unit : unitDOs) {
             String content = remoteConnection.fetchUnitRedfinDetailedPage(unit.getRedUrl());
-            // TODO: Xiaoguang
+            content.equals("");
         }
     }
 
@@ -60,13 +56,5 @@ public class UnitProcessor {
 
     public void setRemoteConnection(RemoteConnection remoteConnection) {
         this.remoteConnection = remoteConnection;
-    }
-
-    public CrawlingHistoryService getCrawlingHistoryService() {
-        return crawlingHistoryService;
-    }
-
-    public void setCrawlingHistoryService(CrawlingHistoryService crawlingHistoryService) {
-        this.crawlingHistoryService = crawlingHistoryService;
     }
 }

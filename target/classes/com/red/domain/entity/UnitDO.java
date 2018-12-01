@@ -16,6 +16,7 @@ public class UnitDO {
     private Long id;
     private String MLS;
     private int HOA;
+    @Enumerated(EnumType.STRING)
     private PropertyType propertyType;
     private County county;
     private int yearBuilt;

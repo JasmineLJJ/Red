@@ -14,6 +14,7 @@ public class TradingHistoryDO {
     private Date createdDate;
     private String MSL;
     private UnitStatus status; // closed transaction, pending transaction
+//    private Long unitId;
     private UnitDO unitDo;
 
     public Long getId() {
@@ -55,6 +56,14 @@ public class TradingHistoryDO {
     public void setMSL(String MSL) {
         this.MSL = MSL;
     }
+
+//    public Long getUnitId() {
+//        return unitId;
+//    }
+//
+//    public void setUnitId(Long unitId) {
+//        this.unitId = unitId;
+//    }
 
     public UnitDO getUnitDo() {
         return unitDo;

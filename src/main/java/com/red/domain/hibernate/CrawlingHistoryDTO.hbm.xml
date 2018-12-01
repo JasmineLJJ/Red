@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.red.domain.entity.SchoolDO" table="SCHOOL">
+        <id name="id" type="long"><column name="ID" unique="true"/><generator class="increment"/></id>
+        <property name="area" type="string"><column name="AREA" length="30" not-null="false" /></property>
+        <property name="zipcode" type="string"><column name="ZIPCODE" length="10" not-null="false" /></property>
+        <property name="startTime" type="date"><column name="STARTTIME" not-null="false" /></property>
+        <property name="endTime" type="date"><column name="ENDTIME" not-null="false" /></property>
+        <property name="version" type="long"><column name="VERSION" not-null="false" /></property>
+    </class>
+
+</hibernate-mapping>
