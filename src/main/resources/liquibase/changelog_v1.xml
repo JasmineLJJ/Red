@@ -208,4 +208,9 @@
             <column name="ADDRESS" type="VARCHAR(100)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="junjie" id="change-unit.bath-datatype">
+        <modifyDataType columnName="bath"
+                        newDataType="DECIMAL(4,2)"
+                        tableName="UNIT"/>
+    </changeSet>
 </databaseChangeLog>

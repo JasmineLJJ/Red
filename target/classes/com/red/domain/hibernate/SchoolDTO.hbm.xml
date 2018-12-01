@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.red.domain.entity.SchoolDO" table="SCHOOL">
+        <id name="id" type="long"><column name="ID" unique="true"/><generator class="increment"/></id>
+        <property name="schoolName" type="string"><column name="SCHOOL_NAME" length="40" not-null="true" /></property>
+        <property name="greatSchoolRating" type="float"><column name="GREAT_SCHOOL_RATING" not-null="false" /></property>
+        <property name="parentRating" type="float"><column name="PARENT_RATING" not-null="false" /></property>
+        <property name="level"><column name="LEVEL" length="20" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.SchoolLevel</param>
+            </type>
+        </property>
+    </class>
+
+</hibernate-mapping>
