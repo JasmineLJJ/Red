@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.red.domain.entity.UnitDO" table="UNIT">
+        <id name="id" type="long"><column name="ID" unique="true"/><generator class="increment"/></id>
+        <property name="MLS" type="string"><column name="MLS" length="20" not-null="true" /></property>
+        <property name="HOA" type="integer"><column name="HOA" not-null="false" /></property>
+        <property name="propertyType" column="PROPERTY_TYPE">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.PropertyType</param>
+                <param name="type">12</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        <property name="county"><column name="COUNTY" length="20" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.County</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property name="yearBuilt" type="integer"><column name="YEAR_BUILT" not-null="true" /></property>
+        <property name="yearRenovated" type="integer"><column name="YEAR_RENOVATED" not-null="true" /></property>
+        <property name="style"><column name="STYLE" length="20" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.PropertyStyle</param>
+            </type>
+        </property>
+        <property name="lotSize" type="integer"><column name="LOT_SIZE" not-null="false" /></property>
+        <property name="finishedSize" type="integer"><column name="FINISHED_SIZE" not-null="true" /></property>
+        <property name="street" type="string"><column name="STREET" length="100" not-null="true" /></property>
+        <property name="streetAddition" type="string"><column name="STREET_ADDITION" length="100" not-null="false" /></property>
+        <property name="unitNumber" type="integer"><column name="UNIT_NUMBER" not-null="false" /></property>
+        <property name="state"><column name="STATE" length="10" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.State</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property name="zipcode" type="string"><column name="ZIPCODE" length="10" not-null="true" /></property>
+        <property name="status"><column name="STATUS" length="10" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.red.domain.UnitStatus</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property name="beds" type="integer"><column name="BEDS" not-null="true" /></property>
+        <property name="bath" type="integer"><column name="BATH" not-null="true" /></property>
+        <property name="garage" type="integer"><column name="GARAGE" not-null="false" /></property>
+        <property name="gym" type="boolean"><column name="GYM" not-null="false" /></property>
+        <property name="swimmingPool" type="boolean"><column name="SWIMMING_POOL" not-null="false" /></property>
+        <property name="estimatedPrice" type="integer"><column name="ESTIMATED_PRICE" not-null="false" /></property>
+        <property name="latestListingPrice" type="integer"><column name="LATEST_LISTING_PRICE" not-null="false" /></property>
+        <property name="soldPrice" type="integer"><column name="SOLD_PRICE" not-null="false" /></property>
+        <property name="soldDate" type="date"><column name="SOLD_DATE" not-null="false" /></property>
+        <property name="createdDate" type="timestamp"><column name="CREATED_DATE" not-null="true" /></property>
+        <property name="lastUpdatedDate" type="timestamp"><column name="LAST_UPDATED_DATE" not-null="true" /></property>
+        <property name="unitCreatedDate" type="date"><column name="UNIT_CREATED_DATE" not-null="false" /></property>
+        <property name="redUrl" type="string"><column name="RED_URL" length="100" not-null="false" /></property>
+        <property name="detailed" type="boolean"><column name="DETAILED" not-null="false" /></property>
+        <property name="pricePerSF" type="integer"><column name="PRICE_PER_SF" not-null="false" /></property>
+        <property name="streetNumber" type="integer"><column name="STREET_NUMBER" not-null="false" /></property>
+        <property name="address" type="string"><column name="ADDRESS" not-null="false" /></property>
+
+        <set name="schoolDTOs" table="UNIT_SCHOOL" inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="UNIT_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.red.domain.entity.SchoolDO">
+                <column name="SCHOOL_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

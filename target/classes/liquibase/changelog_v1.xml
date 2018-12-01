@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="junjie" id="create_table_unit">
+        <createTable tableName="UNIT">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="MLS" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HOA" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PROPERTY_TYPE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COUNTY" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="YEAR_BUILT" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="YEAR_RENOVATED" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="STYLE" type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LOT_SIZE" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="STREET" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STREET_ADDITION" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="UNIT_NUMBER" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="STATE" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZIPCODE" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BEDS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BATH" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GARAGE" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="GYM" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SWIMMING_POOL" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="FINISHED_SIZE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ESTIMATED_PRICE" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LATEST_LISTING_PRICE" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SOLD_PRICE" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SOLD_DATE" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CREATED_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_UPDATED_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UNIT_CREATED_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RED_URL" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="DETAILED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="create_table_tradinghistory">
+        <createTable tableName="TRADING_HISTORY">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="UNIT_ID" type="INT UNSIGNED">
+                <constraints nullable="false" foreignKeyName="fk_trading_history_unit" references="UNIT(ID)"/>
+            </column>
+            <column name="PRICE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MSL" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="create_table_school">
+        <createTable tableName="SCHOOL">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="SCHOOL_NAME" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GREAT_SCHOOL_RATING" type="DECIMAL(4,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PARENT_RATING" type="DECIMAL(4,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LEVEL" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="create_table_unit_school">
+        <createTable tableName="UNIT_SCHOOL">
+            <column name="UNIT_ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true" foreignKeyName="fk_unit_school_unit" references="UNIT(ID)"/>
+            </column>
+            <column name="SCHOOL_ID" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true" foreignKeyName="fk_unit_school_school" references="SCHOOL(ID)"/>
+            </column>
+            <column name="DISTANCE" type="DECIMAL(4,2)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="create_table_crawling_history">
+        <createTable tableName="CRAWLINGHISTORY">
+            <column autoIncrement="true" name="ID" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="AREA" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZIPCODE" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STARTTIME" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ENDTIME" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="create_table_sequence">
+        <createTable tableName="SEQUENCE">
+            <column name="ID" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_UPDATED_DATE" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="junjie" id="insert-crawling-history-sequence">
+        <insert tableName="SEQUENCE">
+            <column name="ID" value="1"/>
+            <column name="NAME" value="CRAWLING_HISTORY_SEQUENCE"/>
+            <column name="VALUE" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="junjie" id="add-column-PRICE_PER_SF-unit">
+        <addColumn tableName="UNIT">
+            <column name="PRICE_PER_SF" type="INT"/>
+            <column name="STREET_NUMBER" type="INT"/>
+            <column name="ADDRESS" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
