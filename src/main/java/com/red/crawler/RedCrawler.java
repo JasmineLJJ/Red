@@ -34,6 +34,7 @@ public class RedCrawler {
         request.setGoals(Arrays.asList( "clean", "install" ) );
 
         Invoker invoker = new DefaultInvoker();
+        //invoker.setMavenHome(new File("/usr/local/Cellar/maven/3.3.9/libexec"));
         invoker.setMavenHome(new File(System.getenv("M3_HOME")));
         try {
             invoker.execute(request);

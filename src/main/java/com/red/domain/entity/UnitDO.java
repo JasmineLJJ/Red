@@ -51,6 +51,31 @@ public class UnitDO {
     private BigDecimal longitude;
     private BigDecimal latitude;
 
+    public String debugString(String prefix) {
+        String schoolsString = "\n";
+        for (SchoolDO schoolDO : schoolDOs) {
+            schoolsString += schoolDO.debugString(prefix + "  ");
+        }
+        String histoiesString = "\n";
+        for (TradingHistoryDO tradingHistoryDO : tradingHistoryDOs) {
+            histoiesString += tradingHistoryDO.debugString(prefix + "  ");
+        }
+        return prefix + "{id: " + id + ",\n"
+                + prefix + " Redfin Estimate: " + estimatedPrice + ",\n"
+                + prefix + " HOA: " + HOA + ",\n"
+                + prefix + " County: " + county.toString() + ",\n"
+                + prefix + " MLS#: " + MLS + ",\n"
+                + prefix + " Year Built: " + yearBuilt + ",\n"
+                + prefix + " Lot Size: " + lotSize + ",\n"
+                + prefix + " Schools: " + schoolsString
+                + prefix + " TradingHistories: " + histoiesString + "\n"
+                + prefix + "}\n";
+
+    }
+
+    public String debugString() {
+        return debugString("");
+    }
 
     public void addTradingHistory(TradingHistoryDO tradingHistoryDO) {
         if (tradingHistoryDOs == null) {

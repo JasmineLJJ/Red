@@ -1,8 +1,7 @@
 package com.red.domain.entity;
 
-import com.red.domain.UnitStatus;
+import com.red.domain.TradingStatus;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,8 +12,21 @@ public class TradingHistoryDO {
     private Integer price;
     private Date createdDate;
     private String MSL;
-    private UnitStatus status; // closed transaction, pending transaction
+    private TradingStatus status; // listed, price changed, sold.
     private UnitDO unitDo;
+
+    public String debugString(String prefix) {
+        return prefix + "{id: " + id + ",\n"
+                + prefix + " price: " + price + ",\n"
+                + prefix + " createdDate: " + createdDate.toString() + ",\n"
+                + prefix + " MSL: " + MSL + ",\n"
+                + prefix + " status: " + status.toString() + "\n"
+                + prefix + "}\n";
+    }
+
+    public String debugString() {
+        return debugString("");
+    }
 
     public Long getId() {
         return id;
@@ -40,11 +52,11 @@ public class TradingHistoryDO {
         this.createdDate = createdDate;
     }
 
-    public UnitStatus getStatus() {
+    public TradingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(UnitStatus status) {
+    public void setStatus(TradingStatus status) {
         this.status = status;
     }
 

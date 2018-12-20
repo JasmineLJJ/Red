@@ -14,9 +14,11 @@ public enum County {
     CUPERTINO("CUPERTINO");
 
     private String cityName;
+
     County(String cityName) {
         this.cityName = cityName;
     }
+
     public String toString() {
         return name();
     }

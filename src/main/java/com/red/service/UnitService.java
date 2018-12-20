@@ -23,7 +23,7 @@ public class UnitService {
         tradingHistoryDO.setCreatedDate(new Date(1541030400));
         tradingHistoryDO.setPrice(1110000);
         tradingHistoryDO.setMSL("ML81730631");
-        tradingHistoryDO.setStatus(UnitStatus.Open);
+        tradingHistoryDO.setStatus(TradingStatus.Listed);
 
         UnitDO unitDO = new UnitDO();
         unitDO.setPropertyType(PropertyType.SINGLE);

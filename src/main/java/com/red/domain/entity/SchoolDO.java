@@ -14,6 +14,19 @@ public class SchoolDO {
     private Float parentRating;
     private SchoolLevel level;
 
+    public String debugString(String prefix) {
+        return prefix + "{id: " + id + ",\n"
+                + prefix + " schoolName: " + schoolName + ",\n"
+                + prefix + " greatSchoolRating: " + greatSchoolRating + ",\n"
+                + prefix + " parentRating: " + parentRating + ",\n"
+                + prefix + " schoolLevel: " + level.toString() + "\n"
+                + prefix + "}\n";
+    }
+
+    public String debugString() {
+        return debugString("");
+    }
+
     public Long getId() {
         return id;
     }
