@@ -45,7 +45,7 @@ public class UnitDO {
     private Boolean detailed;
     private Set<TradingHistoryDO> tradingHistoryDOs;
     private Set<SchoolDO> schoolDOs;
-    private int pricePerSF;
+    private int pricePerSF; // TODO(junjieliu): delete column.
     private int streetNumber;
     private String address;
     private BigDecimal longitude;
@@ -61,12 +61,20 @@ public class UnitDO {
             histoiesString += tradingHistoryDO.debugString(prefix + "  ");
         }
         return prefix + "{id: " + id + ",\n"
-                + prefix + " Redfin Estimate: " + estimatedPrice + ",\n"
-                + prefix + " HOA: " + HOA + ",\n"
+                + prefix + " Street Address: " + address + ",\n"
+                + prefix + " Postal Code: " + zipcode + ",\n"
                 + prefix + " County: " + county.toString() + ",\n"
-                + prefix + " MLS#: " + MLS + ",\n"
+                + prefix + " Listing Price: " + latestListingPrice + ",\n"
+                + prefix + " Price / Sq. Ft.: " + pricePerSF + ",\n"
+                + prefix + " Redfin Estimate: " + estimatedPrice + ",\n"
                 + prefix + " Year Built: " + yearBuilt + ",\n"
+                + prefix + " Year Renovated: " + yearRenovated + ",\n"
+                + prefix + " Beds: " + beds + ",\n"
+                + prefix + " Baths: " + bath + ",\n"
                 + prefix + " Lot Size: " + lotSize + ",\n"
+                + prefix + " Finished Size: " + finishedSize + ",\n"
+                + prefix + " HOA: " + HOA + ",\n"
+                + prefix + " MLS#: " + MLS + ",\n"
                 + prefix + " Schools: " + schoolsString
                 + prefix + " TradingHistories: " + histoiesString + "\n"
                 + prefix + "}\n";

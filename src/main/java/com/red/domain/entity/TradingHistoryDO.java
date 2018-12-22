@@ -10,6 +10,7 @@ import java.util.Date;
 public class TradingHistoryDO {
     private Long id;
     private Integer price;
+    private Integer pricePerSqFt;   // TODO(junjieliu): add column to table.
     private Date createdDate;
     private String MSL;
     private TradingStatus status; // listed, price changed, sold.
@@ -18,6 +19,7 @@ public class TradingHistoryDO {
     public String debugString(String prefix) {
         return prefix + "{id: " + id + ",\n"
                 + prefix + " price: " + price + ",\n"
+                + prefix + " price per sq. ft.: " + pricePerSqFt + ",\n"
                 + prefix + " createdDate: " + createdDate.toString() + ",\n"
                 + prefix + " MSL: " + MSL + ",\n"
                 + prefix + " status: " + status.toString() + "\n"
@@ -42,6 +44,14 @@ public class TradingHistoryDO {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getPricePerSqFt() {
+        return pricePerSqFt;
+    }
+
+    public void setPricePerSqFt(Integer price) {
+        this.pricePerSqFt = price;
     }
 
     public Date getCreatedDate() {

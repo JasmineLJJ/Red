@@ -56,16 +56,21 @@ public class UnitProcessor {
             try {
                 Document doc = Jsoup.connect(unit.getRedUrl()).get();
 
-                // Unit basic info.
+                // Init unitDO and basic infos.
                 UnitDO unitDO = new UnitDO();
+                String streetAddress = doc.getElementsByClass("street-address").first().text();
+                unitDO.setAddress(streetAddress);
+                String postalCode = doc.getElementsByClass("postal-code").first().text();
+                unitDO.setZipcode(postalCode);
 
+                // Unit key details.
                 Elements keyDetails = doc.getElementsByClass("keyDetail font-size-base");
                 for (Element keyDetail : keyDetails) {
                     // Community and Property Type can be parsed, too.
-                    String title = keyDetail.children().first().text();
-                    String content = keyDetail.children().get(1).text();
+                    String title = keyDetail.child(0).text();
+                    String content = keyDetail.child(1).text();
                     if (title.contains("HOA Dues")) {
-                        unitDO.setHOA(parseMoneyStringToInteger(content));
+                        unitDO.setHOA(parseComplexStringToInteger(content));
                     } else if (title.contains("County")) {
                         unitDO.setCounty(County.getCityFromName(content));
                     } else if (title.contains("MLS")) {
@@ -77,9 +82,28 @@ public class UnitProcessor {
                     }
                 }
 
-                // Get estimatedPrice.
+                // Get price facts.
+                String listingPrice = doc.getElementsByClass("info-block price").first().child(0).child(0).child(1).text();
+                unitDO.setLatestListingPrice(parseComplexStringToInteger(listingPrice));
                 String estimatedPrice = doc.select("span:contains(Redfin Estimate:)").first().text();
-                unitDO.setEstimatedPrice(parseMoneyStringToInteger(estimatedPrice));
+                unitDO.setEstimatedPrice(parseComplexStringToInteger(estimatedPrice));
+
+                // Get Home Facts.
+                Elements homeFacts = doc.getElementsByClass("facts-table").first().children();
+                for (Element fact : homeFacts) {
+                    String title = fact.child(0).text();
+                    String content = fact.child(1).text();
+                    if (title.contains("Beds")) {
+                        unitDO.setBeds(Integer.parseInt(content));
+                    } else if (title.contains("Baths")) {
+                        unitDO.setBath(Float.parseFloat(content));
+                    } else if (title.contains("Finished Sq")) {
+                        unitDO.setFinishedSize(parseComplexStringToInteger(content));
+                        unitDO.setPricePerSF(unitDO.getLatestListingPrice() / unitDO.getFinishedSize());
+                    } else if (title.contains("Year Renovated")) {
+                        unitDO.setYearRenovated(Integer.parseInt(content));
+                    }
+                }
 
                 // Get schools.
                 Elements schools = doc.getElementsByClass("schools-table-row");
@@ -120,9 +144,12 @@ public class UnitProcessor {
                     String potentialMSL = historyElements.get(1).child(2).child(0).text();
                     int indexMS = potentialMSL.indexOf("#ML");
                     if (indexMS >= 0) {
-                        tradingHistory.setMSL(potentialMSL.substring(indexMS));
+                        tradingHistory.setMSL(potentialMSL.substring(indexMS+1));
+                    } else {
+                        tradingHistory.setMSL("Public Record");
                     }
-                    tradingHistory.setPrice(parseMoneyStringToInteger(historyElements.get(2).text()));
+                    tradingHistory.setPrice(parseComplexStringToInteger(historyElements.get(2).text()));
+                    tradingHistory.setPricePerSqFt(tradingHistory.getPrice() / unitDO.getFinishedSize());
                     unitDO.addTradingHistory(tradingHistory);
                 }
 
@@ -157,7 +184,7 @@ public class UnitProcessor {
         this.crawlingHistoryService = crawlingHistoryService;
     }
 
-    public Integer parseMoneyStringToInteger(String money) {
-        return Integer.valueOf(money.replaceAll("[^\\d.]+", ""));
+    public Integer parseComplexStringToInteger(String str) {
+        return Integer.valueOf(str.replaceAll("[^\\d.]+", ""));
     }
 }
